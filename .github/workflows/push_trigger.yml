@@ -59,10 +59,10 @@ jobs:
       run: find -name '*.jar' -executable -type f  -exec zip release.zip {} +
 
     - name: Upload the springboot jars 
-#      uses: actions/upload-artifact@v1
-#      with:
-#        name: release
-#        path: ./release.zip
+      uses: actions/upload-artifact@v1
+      with:
+        name: release
+        path: ./release.zip
 #    - uses: 8398a7/action-slack@v3
 #      with:
 #        status: ${{ job.status }}
