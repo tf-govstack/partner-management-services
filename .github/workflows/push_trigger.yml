@@ -59,17 +59,17 @@ jobs:
       run: find -name '*.jar' -executable -type f  -exec zip release.zip {} +
 
     - name: Upload the springboot jars 
-      uses: actions/upload-artifact@v1
-      with:
-        name: release
-        path: ./release.zip
-    - uses: 8398a7/action-slack@v3
-      with:
-        status: ${{ job.status }}
-        fields: repo,message,commit,workflow,job # selectable (default: repo,message)
-      env:
-        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }} # required
-      if: failure() # Pick up events even if the job fails or is canceled.
+#      uses: actions/upload-artifact@v1
+#      with:
+#        name: release
+#        path: ./release.zip
+#    - uses: 8398a7/action-slack@v3
+#      with:
+#        status: ${{ job.status }}
+#        fields: repo,message,commit,workflow,job # selectable (default: repo,message)
+#      env:
+#        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }} # required
+#      if: failure() # Pick up events even if the job fails or is canceled.
 
   publish_to_nexus:
     if: "!contains(github.ref, 'master')"
@@ -191,13 +191,13 @@ jobs:
           echo VERSION=$VERSION
           docker tag $SERVICE_NAME $IMAGE_ID:$VERSION
           docker push $IMAGE_ID:$VERSION
-      - uses: 8398a7/action-slack@v3
-        with:
-          status: ${{ job.status }}
-          fields: repo,message,commit,workflow,job # selectable (default: repo,message)
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_DEVOPS_WEBHOOK }} # required
-        if: failure() # Pick up events even if the job fails or is canceled.
+#      - uses: 8398a7/action-slack@v3
+#        with:
+#          status: ${{ job.status }}
+#          fields: repo,message,commit,workflow,job # selectable (default: repo,message)
+#        env:
+#          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_DEVOPS_WEBHOOK }} # required
+#        if: failure() # Pick up events even if the job fails or is canceled.
 
   docker-partner-management-service:
     needs: build
@@ -258,13 +258,13 @@ jobs:
           echo VERSION=$VERSION
           docker tag $SERVICE_NAME $IMAGE_ID:$VERSION
           docker push $IMAGE_ID:$VERSION
-      - uses: 8398a7/action-slack@v3
-        with:
-          status: ${{ job.status }}
-          fields: repo,message,commit,workflow,job # selectable (default: repo,message)
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_DEVOPS_WEBHOOK }} # required
-        if: failure() # Pick up events even if the job fails or is canceled.
+#      - uses: 8398a7/action-slack@v3
+#        with:
+#          status: ${{ job.status }}
+#          fields: repo,message,commit,workflow,job # selectable (default: repo,message)
+#        env:
+#          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_DEVOPS_WEBHOOK }} # required
+#        if: failure() # Pick up events even if the job fails or is canceled.
   sonar_analysis:
     runs-on: ubuntu-latest
     steps:
@@ -298,13 +298,13 @@ jobs:
           cd partner
           mvn -B package --file pom.xml -s $GITHUB_WORKSPACE/settings.xml
 
-      - name: Analyze with SonarCloud
-        run: |
-          cd partner
-          mvn -B -Dgpg.skip verify sonar:sonar -Dsonar.projectKey=mosip_${{ github.event.repository.name }} -Dsonar.organization=${{ secrets.ORG_KEY }} -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+ #     - name: Analyze with SonarCloud
+ #       run: |
+ #         cd partner
+ #         mvn -B -Dgpg.skip verify sonar:sonar -Dsonar.projectKey=mosip_${{ github.event.repository.name }} -Dsonar.organization=${{ secrets.ORG_KEY }} -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+ #       env:
+ #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+ #         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
 
 
